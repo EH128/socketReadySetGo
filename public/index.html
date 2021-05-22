@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <button id="btn">Count Down</button>
+    <div id="go">GO!</div>
+    <button id="reset">Reset</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      var socket = io();
+      let count = 0;
+      const button = document.getElementById("btn");
+      const go = document.getElementById("go");
+      const resetButton = document.getElementById("reset");
+
+      const reset = () => {
+        resetButton.style.display = "block";
+      };
+      const resetTimer = () => {
+        count = 0;
+        document.body.style.backgroundColor = "#FFFFFF";
+        go.style.display = "none";
+        resetButton.style.display = "none";
+        button.style.display = "block";
+      };
+      const changeColor = (changeInterval) => {
+        count += 1;
+        button.style.display = "none";
+        if (count === 2) {
+          document.body.style.background =
+            "url('./img/two.png') no-repeat center";
+          document.body.style.backgroundSize = "200px 250px";
+          return;
+        }
+        if (count === 3) {
+          document.body.style.background =
+            "url('./img/one.png') no-repeat center";
+          document.body.style.backgroundSize = "200px 250px";
+          return;
+        }
+        if (count === 4) {
+          clearInterval(changeInterval);
+          document.body.style.background = "green";
+          go.style.display = "block";
+          setTimeout(reset, 1000);
+          return;
+        } else {
+          document.body.style.background =
+            "url('./img/three.png') no-repeat center";
+        }
+        document.body.style.backgroundSize = "300px 350px";
+      };
+      const timerStart = () => {
+        changeColor();
+        let changeInterval = setInterval(() => {
+          changeColor(changeInterval);
+        }, 600);
+      };
+
+      const emit = () => {
+        socket.emit("show start");
+      };
+
+      button.addEventListener("click", emit);
+      resetButton.addEventListener("click", resetTimer);
+
+      socket.on("show start", timerStart);
+    </script>
+  </body>
+</html>

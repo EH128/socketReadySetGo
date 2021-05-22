@@ -1,0 +1,22 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#btn {
+  font-size: 50px;
+  padding: 30px;
+}
+#go {
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: none;
+}
+#reset {
+  font-size: 25px;
+  padding: 5px 15px;
+  display: none;
+}
