@@ -64,14 +64,19 @@
         }, 600);
       };
 
-      const emit = () => {
+      const emitStart = () => {
         socket.emit("show start");
       };
 
-      button.addEventListener("click", emit);
-      resetButton.addEventListener("click", resetTimer);
+      const emitReset = () => {
+        socket.emit("reset");
+      };
+
+      button.addEventListener("click", emitStart);
+      resetButton.addEventListener("click", emitReset);
 
       socket.on("show start", timerStart);
+      socket.on("reset", resetTimer);
     </script>
   </body>
 </html>

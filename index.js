@@ -13,6 +13,9 @@ io.on("connection", (socket) => {
   socket.on("show start", () => {
     io.emit("show start");
   });
+  socket.on("reset", () => {
+    io.emit("reset");
+  });
 });
 
 server.listen(process.env.PORT || 3000);
